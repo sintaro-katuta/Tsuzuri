@@ -1,0 +1,32 @@
+.container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.main {
+  text-align: center;
+  padding: 2rem;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: var(--paper-shadow);
+  max-width: 400px;
+  width: 90%;
+}
+
+.title {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: var(--accent-brown);
+}
+
+.description {
+  margin-bottom: 2rem;
+  color: var(--foreground);
+}
+
+.login {
+  margin-top: 1rem;
+}
