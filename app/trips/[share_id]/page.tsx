@@ -12,8 +12,15 @@ export default async function TripPage({ params }: Props) {
     const { share_id } = await params
     const supabase = await createClient()
 
-    // 1. Get Trip by share_id (Auth check handled by RLS, but here we just need to know if it exists)
-    // Since we allow access to anyone with the link (authenticated), we fetch it.
+    // 1. Check Auth FIRST
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) {
+        // If not logged in, redirect to login page with return URL
+        redirect(`/?next=/trips/${share_id}`)
+    }
+
+    // 2. Get Trip by share_id
+    // Since we validated auth, RLS will allow access if the user is authenticated.
     const { data: trip } = await supabase
         .from('trips')
         .select('*')
@@ -24,19 +31,12 @@ export default async function TripPage({ params }: Props) {
         notFound()
     }
 
-    // 2. Get Items
+    // 3. Get Items
     const { data: items } = await supabase
         .from('timeline_items')
         .select('*')
         .eq('trip_id', trip.id)
         .order('time', { ascending: true })
-
-    // 3. Check Auth (for determining if user can edit? Current logic: All auth users can edit)
-    const { data: { user } } = await supabase.auth.getUser()
-    if (!user) {
-        // If not logged in, redirect to login (or handle as read-only if we supported that)
-        redirect(`/?next=/trips/${share_id}`)
-    }
 
     return (
         <>

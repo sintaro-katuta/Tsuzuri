@@ -25,7 +25,7 @@ export default function PlanItem({ item }: PlanItemProps) {
     return (
         <div className={styles.itemWrapper}>
             <div className={styles.dateMarker}>
-                {new Date(item.time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                {new Date(item.time).toLocaleTimeString('ja-JP', { hour: '2-digit', minute: '2-digit', hour12: false })}
             </div>
             <div className={styles.planCard}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>

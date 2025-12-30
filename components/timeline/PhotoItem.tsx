@@ -14,7 +14,7 @@ export default function PhotoItem({ item }: PhotoItemProps) {
     return (
         <div className={styles.itemWrapper}>
             <div className={styles.dateMarker}>
-                {new Date(item.time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                {new Date(item.time).toLocaleTimeString('ja-JP', { hour: '2-digit', minute: '2-digit', hour12: false })}
             </div>
             <div className={styles.photoCard}>
                 {/* Using standard img tag for simplicity with unknown dimensions or external URLs initially, 

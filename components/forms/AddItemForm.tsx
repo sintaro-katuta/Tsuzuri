@@ -45,6 +45,7 @@ export default function AddItemForm({ tripId, onClose }: AddItemFormProps) {
 
                 // 2. Add to DB
                 formData.append('photoPath', path)
+                formData.delete('photo') // Don't send the file content to Server Action
                 await addPhoto(formData)
                 onClose()
             }
