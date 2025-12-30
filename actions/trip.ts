@@ -1,0 +1,41 @@
+'use server'
+
+import { createClient } from '@/lib/supabase/server'
+import { redirect } from 'next/navigation'
+
+export async function createTrip(formData: FormData) {
+    const title = formData.get('title') as string
+    const startDate = formData.get('startDate') as string
+    const endDate = formData.get('endDate') as string
+
+    if (!title) {
+        throw new Error('Title is required')
+    }
+
+    const supabase = await createClient()
+
+    // Get current user
+    const { data: { user }, error: authError } = await supabase.auth.getUser()
+    if (authError || !user) {
+        throw new Error('Unauthorized')
+    }
+
+    // Insert trip
+    const { data, error } = await supabase
+        .from('trips')
+        .insert({
+            title,
+            start_date: startDate ? startDate : null,
+            end_date: endDate ? endDate : null,
+            owner_id: user.id
+        })
+        .select('share_id')
+        .single()
+
+    if (error) {
+        console.error('Error creating trip:', error)
+        throw new Error('Failed to create trip')
+    }
+
+    redirect(`/trips/${data.share_id}`)
+}

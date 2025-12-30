@@ -1,0 +1,106 @@
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 1rem 4rem;
+}
+
+.sectionTitle {
+    font-size: 1.5rem;
+    color: var(--accent-brown);
+    margin-bottom: 1.5rem;
+    border-bottom: 2px dashed #ddd;
+    padding-bottom: 0.5rem;
+}
+
+/* Trip List */
+.tripList {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    margin-bottom: 3rem;
+}
+
+.tripCard {
+    background: white;
+    padding: 1rem;
+    border-radius: 2px;
+    box-shadow: var(--paper-shadow);
+    transition: transform 0.2s;
+    text-decoration: none;
+    display: block;
+    position: relative;
+}
+
+.tripCard:hover {
+    transform: translateY(-2px);
+    z-index: 1;
+}
+
+/* Tape effect */
+.tripCard::before {
+    content: "";
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 25px;
+    background-color: rgba(255, 255, 255, 0.4);
+    background-image: linear-gradient(-45deg,
+            rgba(255, 255, 255, 0.2) 25%,
+            transparent 25%,
+            transparent 50%,
+            rgba(255, 255, 255, 0.2) 50%,
+            rgba(255, 255, 255, 0.2) 75%,
+            transparent 75%,
+            transparent);
+    background-size: 20px 20px;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    opacity: 0.8;
+}
+
+.cardTitle {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    color: var(--foreground);
+}
+
+.cardDate {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+/* Create Form */
+.createForm {
+    background: white;
+    padding: 2rem;
+    border-radius: 4px;
+    box-shadow: var(--paper-shadow);
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.formGroup {
+    margin-bottom: 1rem;
+}
+
+.label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+.input {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-family: inherit;
+}
+
+.submitBtn {
+    width: 100%;
+    margin-top: 1rem;
+}

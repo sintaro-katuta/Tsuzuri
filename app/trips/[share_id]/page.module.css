@@ -1,0 +1,117 @@
+.pageContainer {
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+    padding-bottom: 5rem;
+}
+
+/* Background line */
+.pageContainer::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 2px;
+    background-color: var(--accent-brown);
+    transform: translateX(-50%);
+    z-index: 0;
+    opacity: 0.3;
+}
+
+.timelineHeader {
+    text-align: center;
+    padding: 2rem 0;
+    position: relative;
+    z-index: 1;
+}
+
+.tripTitle {
+    font-size: 2rem;
+    color: var(--accent-brown);
+    background: var(--background);
+    display: inline-block;
+    padding: 0 1rem;
+}
+
+.timelineContent {
+    max-width: 600px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+    padding: 1rem;
+}
+
+/* Items */
+.itemWrapper {
+    margin-bottom: 2rem;
+    position: relative;
+}
+
+.dateMarker {
+    text-align: center;
+    background: var(--accent-green);
+    color: white;
+    display: inline-block;
+    padding: 0.2rem 0.8rem;
+    border-radius: 20px;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+}
+
+.planCard,
+.photoCard {
+    background: white;
+    padding: 1rem;
+    border-radius: 4px;
+    box-shadow: var(--paper-shadow);
+    position: relative;
+}
+
+.planCard {
+    border-left: 4px solid var(--accent-green);
+}
+
+.photoCard {
+    padding: 0.8rem;
+    padding-bottom: 2rem;
+    /* Polaroid bottom space */
+}
+
+.photoImage {
+    width: 100%;
+    height: auto;
+    border: 1px solid #eee;
+    display: block;
+}
+
+.caption {
+    font-family: 'Indie Flower', cursive, sans-serif;
+    /* Fallback */
+    margin-top: 0.5rem;
+    color: #555;
+    text-align: center;
+}
+
+/* Add Button */
+.addButton {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: var(--accent-brown);
+    color: white;
+    font-size: 2rem;
+    border: none;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
