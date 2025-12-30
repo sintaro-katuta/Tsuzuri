@@ -1,3 +1,4 @@
+import { Suspense } from 'react'
 import LoginButton from '@/components/auth/LoginButton'
 import styles from './page.module.css'
 
@@ -10,7 +11,9 @@ export default function Home() {
           旅の思い出を、一枚のタイムラインに。
         </p>
         <div className={styles.login}>
-          <LoginButton />
+          <Suspense fallback={<div>Loading...</div>}>
+            <LoginButton />
+          </Suspense>
         </div>
       </main>
     </div>
