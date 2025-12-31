@@ -1,0 +1,93 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 15rem;
+    /* ~240px */
+    position: relative;
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    user-select: none;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* Gradient Mask for fading top and bottom */
+.container::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to bottom,
+            rgba(255, 255, 255, 1) 0%,
+            rgba(255, 255, 255, 0) 45%,
+            rgba(255, 255, 255, 0) 55%,
+            rgba(255, 255, 255, 1) 100%);
+    pointer-events: none;
+    z-index: 10;
+}
+
+/* Center Highlight Bar */
+.highlight {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    right: 10px;
+    height: 3rem;
+    /* item height */
+    margin-top: -1.5rem;
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.column {
+    height: 100%;
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+    flex: 1;
+    text-align: center;
+    position: relative;
+    z-index: 5;
+    scrollbar-width: none;
+    /* Firefox */
+}
+
+.column::-webkit-scrollbar {
+    display: none;
+    /* Chrome/Safari */
+}
+
+.spacer {
+    height: 6rem;
+    /* (container height / 2) - (item height / 2) */
+}
+
+.item {
+    height: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    color: #ccc;
+    scroll-snap-align: center;
+    transition: color 0.2s, font-weight 0.2s, transform 0.2s;
+}
+
+.item.selected {
+    color: #000;
+    font-weight: 600;
+    font-size: 1.4rem;
+}
+
+.separator {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #333;
+    padding-bottom: 0.2rem;
+    /* Visual adjustment */
+    z-index: 5;
+}

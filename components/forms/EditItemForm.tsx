@@ -1,50 +1,56 @@
 'use client'
 
 import { useState } from 'react'
-import { createClient } from '@/lib/supabase/client'
-import { addPlan, addPhoto } from '@/actions/item'
-import styles from './AddItemForm.module.css'
+import { updatePlan, updatePhoto } from '@/actions/item'
+import styles from './AddItemForm.module.css' // Reusing styles
 import popupStyles from '../ui/TimePickerPopup.module.css'
 import TimePicker from '../ui/TimePicker'
 import DatePicker from '../ui/DatePicker'
 
 
-interface AddItemFormProps {
-    tripId: string
+interface EditItemFormProps {
+    item: any
     onClose: () => void
 }
 
-export default function AddItemForm({ tripId, onClose }: AddItemFormProps) {
-    const [type, setType] = useState<'PLAN' | 'PHOTO'>('PLAN')
-
-
+export default function EditItemForm({ item, onClose }: EditItemFormProps) {
     const [loading, setLoading] = useState(false)
 
-    // Initialize with current date and time
+    // Initialize from item.time
     const [dateValue, setDateValue] = useState(() => {
-        const now = new Date()
-        const year = now.getFullYear()
-        const month = ('0' + (now.getMonth() + 1)).slice(-2)
-        const day = ('0' + now.getDate()).slice(-2)
-        return `${year}-${month}-${day}`
+        if (item.time) {
+            const date = new Date(item.time)
+            const year = date.getFullYear()
+            const month = ('0' + (date.getMonth() + 1)).slice(-2)
+            const day = ('0' + date.getDate()).slice(-2)
+            return `${year}-${month}-${day}`
+        }
+        return ''
     })
 
     const [timeValue, setTimeValue] = useState(() => {
-        const now = new Date()
-        const hours = ('0' + now.getHours()).slice(-2)
-        const minutes = ('0' + now.getMinutes()).slice(-2)
-        return `${hours}:${minutes}`
+        if (item.time) {
+            const date = new Date(item.time)
+            const hours = ('0' + date.getHours()).slice(-2)
+            const minutes = ('0' + date.getMinutes()).slice(-2)
+            return `${hours}:${minutes}`
+        }
+        return ''
     })
 
     const [showTimePicker, setShowTimePicker] = useState(false)
     const [showDatePicker, setShowDatePicker] = useState(false)
 
-    // Helper to display date in Japanese format
     const formatDateDisplay = (dateStr: string) => {
         if (!dateStr) return ''
         const [y, m, d] = dateStr.split('-')
         return `${y}年${m}月${d}日`
     }
+
+
+
+    // Type is determined by the item itself
+    const type = item.type
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
@@ -53,84 +59,44 @@ export default function AddItemForm({ tripId, onClose }: AddItemFormProps) {
         try {
             const formData = new FormData(e.currentTarget)
 
-            // Combine Date and Time into ISO string
-            // Date and Time are already combined in the hidden input 'time'
-            // We just need to make sure the server action handles the ISO string correctly
-            // The previous logic combined checks for date and time fields, now we have one 'time' field.
+            // Combine Date and Time
+            // Similar to AddItemForm, we rely on 'time' hidden input or logic
+            const timeVal = formData.get('time') as string
 
-            // If the hidden input is used, it sends 'time' directly.
-            // Check if we need to do anything else.
+            // If the hidden input is not present (e.g. if we don't render it), we need to handle it.
+            // But we will render input type="hidden" name="time"
+
             // Existing logic:
             // const dateVal = formData.get('date') as string
             // const timeVal = formData.get('time') as string
             // if (dateVal && timeVal) { ... }
 
-            // New logic: 'time' is already set by hidden input (or just reliance on what's in formData)
-            // But we deleted 'date' input.
-            // The hidden input has name="time", so formData.get('time') returns the ISO string.
-            // We should just ensure it exists.
+            // Clean up old 'date' if it exists in formData by any chance, though we removed inputs.
+            formData.delete('date')
 
-            const timeVal = formData.get('time') as string
-            if (!timeVal) {
-                throw new Error('Date is required')
-            }
-
-            formData.append('tripId', tripId)
-            // ... (rest of logic)
+            formData.append('itemId', item.id)
 
             if (type === 'PLAN') {
-                await addPlan(formData)
-                onClose()
+                await updatePlan(formData)
             } else {
-                // Photo Upload flow
-                const fileInput = (e.currentTarget.elements.namedItem('photo') as HTMLInputElement)
-                const file = fileInput.files?.[0]
-
-                if (!file) throw new Error('File required')
-
-                const supabase = createClient()
-                const ext = file.name.split('.').pop()
-                const path = `${tripId}/${Date.now()}.${ext}`
-
-                // 1. Upload to Storage
-                const { error: uploadError } = await supabase.storage
-                    .from('trip-photos')
-                    .upload(path, file)
-
-                if (uploadError) throw uploadError
-
-                // 2. Add to DB
-                formData.append('photoPath', path)
-                formData.delete('photo') // Don't send the file content to Server Action
-                await addPhoto(formData)
-                onClose()
+                await updatePhoto(formData)
             }
+            onClose()
         } catch (err) {
             console.error(err)
-            alert('Error adding item')
+            alert('Error updating item')
         } finally {
             setLoading(false)
         }
     }
 
+
+
     return (
         <div className={styles.overlay}>
             <div className={styles.modal}>
-                <div className={styles.tabs}>
-                    <button
-                        type="button"
-                        className={`${styles.tab} ${type === 'PLAN' ? styles.active : ''}`}
-                        onClick={() => setType('PLAN')}
-                    >
-                        予定
-                    </button>
-                    <button
-                        type="button"
-                        className={`${styles.tab} ${type === 'PHOTO' ? styles.active : ''}`}
-                        onClick={() => setType('PHOTO')}
-                    >
-                        写真
-                    </button>
+                <div style={{ padding: '1.5rem 1.5rem 0', fontWeight: 'bold', fontSize: '1.2rem' }}>
+                    {type === 'PLAN' ? '予定を編集' : '写真を編集'}
                 </div>
 
                 <form onSubmit={handleSubmit} className={styles.form}>
@@ -176,12 +142,12 @@ export default function AddItemForm({ tripId, onClose }: AddItemFormProps) {
                                                 value={timeValue}
                                                 onChange={setTimeValue}
                                             />
-                                            {/* Optional: Add a close button inside if needed, but backdrop works */}
                                         </div>
                                     </>
                                 )}
                             </div>
                         </div>
+                        {/* Removed static TimePicker div */}
                         <input type="hidden" name="time" value={`${dateValue}T${timeValue}`} />
                     </div>
 
@@ -189,28 +155,45 @@ export default function AddItemForm({ tripId, onClose }: AddItemFormProps) {
                         <>
                             <div className={styles.formGroup}>
                                 <label>タイトル</label>
-                                <input name="title" type="text" required className={styles.input} />
+                                <input
+                                    name="title"
+                                    type="text"
+                                    required
+                                    className={styles.input}
+                                    defaultValue={item.title || ''}
+                                />
                             </div>
                             <div className={styles.formGroup}>
                                 <label>メモ</label>
-                                <textarea name="memo" className={styles.textarea} />
+                                <textarea
+                                    name="memo"
+                                    className={styles.textarea}
+                                    defaultValue={item.memo || ''}
+                                />
                             </div>
                             <div className={styles.formGroup}>
                                 <label>Google Map URL</label>
-                                <input name="linkUrl" type="url" className={styles.input} />
+                                <input
+                                    name="linkUrl"
+                                    type="url"
+                                    className={styles.input}
+                                    defaultValue={item.link_url || ''}
+                                />
                             </div>
                         </>
                     )}
 
                     {type === 'PHOTO' && (
                         <>
-                            <div className={styles.formGroup}>
-                                <label>写真を選択</label>
-                                <input name="photo" type="file" required accept="image/*" />
-                            </div>
+                            {/* Photo path is not editable in this version */}
                             <div className={styles.formGroup}>
                                 <label>ひとこと</label>
-                                <textarea name="memo" className={styles.textarea} placeholder="楽しかった！" />
+                                <textarea
+                                    name="memo"
+                                    className={styles.textarea}
+                                    defaultValue={item.memo || ''}
+                                    placeholder="楽しかった！"
+                                />
                             </div>
                         </>
                     )}
@@ -220,7 +203,7 @@ export default function AddItemForm({ tripId, onClose }: AddItemFormProps) {
                             キャンセル
                         </button>
                         <button type="submit" className="btn btn-primary" disabled={loading}>
-                            {loading ? '送信中...' : '追加'}
+                            {loading ? '更新中...' : '更新'}
                         </button>
                     </div>
                 </form>

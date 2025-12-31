@@ -48,6 +48,11 @@ export default function Timeline({ tripId, initialItems }: TimelineProps) {
         }
     }, [supabase, tripId])
 
+    // Update state when initialItems changes (e.g. after revalidatePath)
+    useEffect(() => {
+        setItems(initialItems)
+    }, [initialItems])
+
     return (
         <div className={styles.timelineContent}>
             {items.map((item) => (

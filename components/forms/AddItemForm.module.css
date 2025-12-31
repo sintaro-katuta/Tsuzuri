@@ -16,7 +16,7 @@
     width: 90%;
     max-width: 500px;
     border-radius: 8px;
-    overflow: hidden;
+    /* overflow: hidden; Removed to ensure date pickers aren't clipped if they behave like dropdowns */
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
 
