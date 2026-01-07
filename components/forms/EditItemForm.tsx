@@ -148,7 +148,15 @@ export default function EditItemForm({ item, onClose }: EditItemFormProps) {
                             </div>
                         </div>
                         {/* Removed static TimePicker div */}
-                        <input type="hidden" name="time" value={`${dateValue}T${timeValue}`} />
+                        <input
+                            type="hidden"
+                            name="time"
+                            value={
+                                dateValue && timeValue
+                                    ? new Date(`${dateValue}T${timeValue}`).toISOString()
+                                    : ''
+                            }
+                        />
                     </div>
 
                     {type === 'PLAN' && (

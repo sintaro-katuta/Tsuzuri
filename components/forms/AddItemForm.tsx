@@ -182,7 +182,15 @@ export default function AddItemForm({ tripId, onClose }: AddItemFormProps) {
                                 )}
                             </div>
                         </div>
-                        <input type="hidden" name="time" value={`${dateValue}T${timeValue}`} />
+                        <input
+                            type="hidden"
+                            name="time"
+                            value={
+                                dateValue && timeValue
+                                    ? new Date(`${dateValue}T${timeValue}`).toISOString()
+                                    : ''
+                            }
+                        />
                     </div>
 
                     {type === 'PLAN' && (
