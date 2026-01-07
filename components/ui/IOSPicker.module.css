@@ -74,6 +74,7 @@
     font-size: 1.2rem;
     color: #ccc;
     scroll-snap-align: center;
+    scroll-snap-stop: always;
     transition: color 0.2s, font-weight 0.2s, transform 0.2s;
 }
 
