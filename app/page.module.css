@@ -2,31 +2,246 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  background-color: #fafafa;
+  color: #4a4a4a;
+  font-family: var(--font-kaisei), sans-serif;
+}
+
+/* Common Layout Utilities */
+.contentWrapper {
+  max-width: 1000px;
+  width: 90%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
   align-items: center;
 }
 
-.main {
+.sectionTitle {
+  font-size: 1.8rem;
+  color: var(--accent-brown, #8B5E3C);
+  margin-bottom: 2rem;
   text-align: center;
+  font-weight: 700;
+}
+
+/* Hero Section */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  /* Full viewport height */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  overflow: hidden;
+  color: #fff;
+  /* White text for contrast */
+}
+
+.heroVideoWrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.heroVideo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.heroOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  /* Dark overlay */
+  z-index: 1;
+}
+
+.heroContent {
+  position: relative;
+  z-index: 2;
   padding: 2rem;
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: var(--paper-shadow);
-  max-width: 400px;
-  width: 90%;
+  max-width: 800px;
 }
 
 .title {
-  font-size: 2rem;
-  margin-bottom: 1rem;
-  color: var(--accent-brown);
+  font-size: 2.5rem;
+  /* Larger title */
+  line-height: 1.5;
+  margin-bottom: 0;
+  color: #fff;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
-.description {
-  margin-bottom: 2rem;
-  color: var(--foreground);
-}
-
-.login {
+.loginWrapper {
+  /* Kept for CTA section */
   margin-top: 1rem;
+}
+
+/* Pain Point Section */
+.painPoint {
+  background-color: #f4f1ea;
+  /* Light beige/paper tone */
+  padding: 5rem 1rem;
+  text-align: center;
+}
+
+.sectionSubtitle {
+  font-size: 1.1rem;
+  line-height: 2;
+  font-weight: 400;
+  color: #666;
+}
+
+/* Features Section */
+.features {
+  padding: 6rem 1rem;
+  background-color: #fff;
+}
+
+.featureGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2.5rem;
+  width: 100%;
+}
+
+.featureCard {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 16px;
+  text-align: center;
+  /* Soft, paper-like shadow */
+  box-shadow: 0 4px 20px rgba(139, 94, 60, 0.08);
+  transition: transform 0.3s ease;
+}
+
+.featureCard:hover {
+  transform: translateY(-5px);
+}
+
+.featureIcon {
+  font-size: 3rem;
+  margin-bottom: 1.5rem;
+  display: block;
+}
+
+.featureTitle {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: #333;
+  line-height: 1.6;
+}
+
+.featureDescription {
+  font-size: 0.95rem;
+  color: #666;
+  line-height: 1.8;
+}
+
+/* How To Section */
+.howTo {
+  padding: 6rem 1rem;
+  background-color: #fafafa;
+}
+
+.steps {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 800px;
+}
+
+.step {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  padding: 1.5rem 2rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+}
+
+.stepNumber {
+  background: var(--accent-brown, #8B5E3C);
+  color: #fff;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1rem;
+  margin-right: 1.5rem;
+  flex-shrink: 0;
+}
+
+.stepContent h3 {
+  font-size: 1.1rem;
+  color: #333;
+  margin-bottom: 0.2rem;
+  font-weight: bold;
+}
+
+.stepContent p {
+  font-size: 0.95rem;
+  color: #777;
+}
+
+.stepConnector {
+  height: 20px;
+  border-left: 2px dashed #ddd;
+  margin-left: calc(2rem + 18px - 1px);
+  /* padding + half icon width - half border width */
+}
+
+/* CTA Section */
+.cta {
+  padding: 6rem 1rem;
+  background-color: #fff;
+  text-align: center;
+}
+
+.ctaTitle {
+  font-size: 1.8rem;
+  margin-bottom: 2.5rem;
+  color: var(--accent-brown, #8B5E3C);
+  letter-spacing: 0.05em;
+}
+
+/* Footer */
+.footer {
+  padding: 2rem;
+  text-align: center;
+  color: #aaa;
+  font-size: 0.8rem;
+  background-color: #f9f9f9;
+}
+
+/* Responsive specific adjustments */
+@media (max-width: 768px) {
+  .title {
+    font-size: 1.8rem;
+  }
+
+  .sectionTitle {
+    font-size: 1.5rem;
+  }
+
+  .step {
+    padding: 1.2rem;
+  }
 }
