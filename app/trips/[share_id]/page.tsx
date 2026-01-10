@@ -2,6 +2,7 @@ import { createClient } from '@/lib/supabase/server'
 import { redirect, notFound } from 'next/navigation'
 import Timeline from '@/components/timeline/Timeline'
 import Header from '@/components/Header'
+import TripPageHeader from '@/components/TripPageHeader'
 import styles from './page.module.css'
 
 interface Props {
@@ -42,9 +43,7 @@ export default async function TripPage({ params }: Props) {
         <>
             <Header />
             <div className={styles.pageContainer}>
-                <header className={styles.timelineHeader}>
-                    <h1 className={styles.tripTitle}>{trip.title}</h1>
-                </header>
+                <TripPageHeader trip={trip} />
 
                 <Timeline
                     tripId={trip.id}

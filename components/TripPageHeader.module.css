@@ -1,0 +1,45 @@
+.container {
+    text-align: center;
+    padding: 2rem 0;
+    position: relative;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.title {
+    font-family: var(--font-kaisei), serif;
+    font-size: 2rem;
+    color: var(--accent-brown);
+    /* background: var(--background); Removed as it might block background lines differently */
+    padding: 0 1rem;
+    margin: 0;
+}
+
+.settingsButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #aaa;
+    padding: 0.5rem;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+}
+
+.settingsButton:hover {
+    background: rgba(139, 69, 19, 0.1);
+    color: var(--accent-brown);
+}
+
+@media (max-width: 600px) {
+    .title {
+        font-size: 1.5rem;
+    }
+}
