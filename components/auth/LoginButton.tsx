@@ -4,7 +4,7 @@ import { createClient } from '@/lib/supabase/client'
 
 import { useSearchParams } from 'next/navigation'
 
-export default function LoginButton() {
+export default function LoginButton({ className }: { className?: string }) {
     const searchParams = useSearchParams()
     const next = searchParams.get('next')
 
@@ -19,7 +19,7 @@ export default function LoginButton() {
     }
 
     return (
-        <button className="btn btn-primary" onClick={handleLogin}>
+        <button className={`btn btn-primary ${className || ''}`} onClick={handleLogin}>
             Googleでログイン
         </button>
     )

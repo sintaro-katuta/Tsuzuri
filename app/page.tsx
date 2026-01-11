@@ -1,5 +1,4 @@
-import { Suspense } from 'react'
-import LoginButton from '@/components/auth/LoginButton'
+import Link from 'next/link'
 import styles from './page.module.css'
 
 export default function Home() {
@@ -109,9 +108,9 @@ export default function Home() {
         <div className={styles.contentWrapper}>
           <h2 className={styles.ctaTitle}>さあ、新しい旅のページを綴りましょう。</h2>
           <div className={styles.loginWrapper}>
-            <Suspense fallback={<div>Loading...</div>}>
-              <LoginButton />
-            </Suspense>
+            <Link href="/login" className="btn btn-primary">
+              ログインして始める
+            </Link>
           </div>
         </div>
       </section>
