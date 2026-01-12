@@ -75,7 +75,6 @@ export default function Lightbox({ isOpen, onClose, imageSrc, imageAlt, actions 
                     flexDirection: 'column',
                     alignItems: 'center',
                 }}
-                onClick={(e) => e.stopPropagation()} // Prevent closing when clicking image/actions
             >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
@@ -87,6 +86,7 @@ export default function Lightbox({ isOpen, onClose, imageSrc, imageAlt, actions 
                         objectFit: 'contain',
                         borderRadius: '4px',
                     }}
+                    onClick={(e) => e.stopPropagation()}
                 />
 
                 {/* Actions Bar */}
@@ -101,6 +101,7 @@ export default function Lightbox({ isOpen, onClose, imageSrc, imageAlt, actions 
                             borderRadius: '8px',
                             backdropFilter: 'blur(5px)',
                         }}
+                        onClick={(e) => e.stopPropagation()}
                     >
                         {actions}
                     </div>

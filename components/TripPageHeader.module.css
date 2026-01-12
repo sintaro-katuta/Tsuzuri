@@ -13,7 +13,7 @@
     font-family: var(--font-kaisei), serif;
     font-size: 2rem;
     color: var(--accent-brown);
-    /* background: var(--background); Removed as it might block background lines differently */
+    background: var(--background);
     padding: 0 1rem;
     margin: 0;
 }
