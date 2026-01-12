@@ -1,6 +1,7 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { createPortal } from 'react-dom'
 import { updatePlan, updatePhoto } from '@/actions/item'
 import styles from './AddItemForm.module.css' // Reusing styles
 import popupStyles from '../ui/TimePickerPopup.module.css'
@@ -95,7 +96,19 @@ export default function EditItemForm({ item, onClose }: EditItemFormProps) {
 
 
 
-    return (
+    const [mounted, setMounted] = useState(false)
+
+    useEffect(() => {
+        setMounted(true)
+        document.body.style.overflow = 'hidden'
+        return () => {
+            document.body.style.overflow = ''
+        }
+    }, [])
+
+    if (!mounted) return null
+
+    return createPortal(
         <div className={styles.overlay}>
             <div className={styles.modal}>
                 <div style={{ padding: '1.5rem 1.5rem 0', fontWeight: 'bold', fontSize: '1.2rem' }}>
@@ -219,6 +232,7 @@ export default function EditItemForm({ item, onClose }: EditItemFormProps) {
                     </div>
                 </form>
             </div>
-        </div>
+        </div>,
+        document.body
     )
 }
