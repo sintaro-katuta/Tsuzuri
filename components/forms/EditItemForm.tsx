@@ -109,8 +109,8 @@ export default function EditItemForm({ item, onClose }: EditItemFormProps) {
     if (!mounted) return null
 
     return createPortal(
-        <div className={styles.overlay}>
-            <div className={styles.modal}>
+        <div className={styles.overlay} onClick={onClose}>
+            <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
                 <div style={{ padding: '1.5rem 1.5rem 0', fontWeight: 'bold', fontSize: '1.2rem' }}>
                     {type === 'PLAN' ? '予定を編集' : '写真を編集'}
                 </div>

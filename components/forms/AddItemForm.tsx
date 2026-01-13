@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { createPortal } from 'react-dom'
 import { createClient } from '@/lib/supabase/client'
 import { addPlan, addPhoto } from '@/actions/item'
 import styles from './AddItemForm.module.css'
@@ -113,9 +114,9 @@ export default function AddItemForm({ tripId, onClose }: AddItemFormProps) {
         }
     }
 
-    return (
-        <div className={styles.overlay}>
-            <div className={styles.modal}>
+    return createPortal(
+        <div className={styles.overlay} onClick={onClose}>
+            <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
                 <div className={styles.tabs}>
                     <button
                         type="button"
@@ -233,6 +234,7 @@ export default function AddItemForm({ tripId, onClose }: AddItemFormProps) {
                     </div>
                 </form>
             </div>
-        </div>
+        </div>,
+        document.body
     )
 }

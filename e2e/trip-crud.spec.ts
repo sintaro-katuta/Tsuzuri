@@ -5,7 +5,7 @@ test.describe('Trip CRUD', () => {
     test('should create, update, and delete a trip', async ({ page }) => {
         // 1. Create Trip
         await page.goto('/dashboard');
-        await expect(page.getByRole('heading', { name: 'My Trips' })).toBeVisible();
+        await expect(page.getByRole('heading', { name: '旅のしおり一覧' })).toBeVisible();
 
         const tripTitle = `Test Trip ${Date.now()}`;
         await page.getByPlaceholder('例: 京都2泊3日の旅').fill(tripTitle);
@@ -31,7 +31,8 @@ test.describe('Trip CRUD', () => {
         await expect(page.getByRole('heading', { name: tripTitle })).toBeVisible();
 
         // Take screenshot of new trip
-        // await expect(page).toHaveScreenshot('trip-detail-initial.png');
+        // Take screenshot of new trip
+        await expect(page).toHaveScreenshot('trip-detail-initial.png');
 
         // 3. Update
         await page.getByRole('button', { name: 'Settings' }).click({ force: true });
@@ -56,8 +57,8 @@ test.describe('Trip CRUD', () => {
         // Re-open settings (using force if needed, although clean state preferred)
         await page.getByRole('button', { name: 'Settings' }).click({ force: true });
 
-        // Click "旅行を削除" to verify delete flow
-        await page.getByRole('button', { name: '旅行を削除' }).click();
+        // Click "Delete Trip" icon to verify delete flow
+        await page.getByRole('button', { name: 'Delete Trip' }).click();
 
         // Confirm delete in the separate view
         await page.getByRole('button', { name: '完全に削除する' }).click();

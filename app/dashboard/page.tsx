@@ -26,7 +26,7 @@ export default async function Dashboard() {
             <div className={styles.container}>
 
                 <section>
-                    <h2 className={styles.sectionTitle}>My Trips</h2>
+                    <h2 className={styles.sectionTitle}>旅のしおり一覧</h2>
                     <div className={styles.tripList}>
                         {trips?.map((trip) => (
                             <Link
@@ -47,7 +47,7 @@ export default async function Dashboard() {
                 </section>
 
                 <section>
-                    <h2 className={styles.sectionTitle}>New Trip</h2>
+                    <h2 className={styles.sectionTitle}>新しい旅のしおり</h2>
                     <form action={createTrip} className={styles.createForm}>
                         <div className={styles.formGroup}>
                             <label className={styles.label}>タイトル</label>

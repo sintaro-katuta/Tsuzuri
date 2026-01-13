@@ -14,7 +14,7 @@ export default defineConfig({
     reporter: 'html',
     timeout: 60000,
     use: {
-        baseURL: 'http://localhost:3005',
+        baseURL: process.env.BASE_URL || 'http://localhost:3005',
         trace: 'on-first-retry',
     },
     projects: [
@@ -28,7 +28,7 @@ export default defineConfig({
             dependencies: ['setup'],
         },
     ],
-    webServer: {
+    webServer: process.env.SKIP_WEBSERVER ? undefined : {
         command: 'npm run dev',
         url: 'http://localhost:3005',
         reuseExistingServer: !process.env.CI,
